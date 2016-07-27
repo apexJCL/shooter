@@ -39,7 +39,8 @@ end
 
 ]]
 function Player:act (dt)
-  self.bullet:act(dt)
+  -- Bullet act
+  self.bullet:act()
   -- Cannon points automatically
   self.direction = (self.direction >= (2*math.pi) and 0) or self.direction + (self.speed * dt)
 end

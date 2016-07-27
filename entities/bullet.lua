@@ -1,22 +1,17 @@
+require(ENTITIES_PATH..'baseEntity')
 --[[
   Entity: Bullet
 ]]
 
-Bullet = {}
+Bullet = BaseEntity:new{}
 
 function Bullet:new()
-  require(ENTITIES_PATH..'baseEntity')
-  description = {
-    x = 0,
-    y = 0,
-    direction = 0,
-    speed = 10,
-    sprite = love.graphics.newImage('assets/bullet.png'),
-    moving = false,
-    angle = 0,
-    sound_shoot = love.audio.newSource('assets/sounds/shoot.wav', "static")
-  }
-  description.width, description.height = description.sprite:getDimensions()
+  description = BaseEntity:new()
+  description.speed = 10
+  description.moving = false
+  description.angle = 0
+  description.sound_shoot = love.audio.newSource('assets/sounds/shoot.wav', "static")
+  description:setSprite(love.graphics.newImage('assets/bullet.png'), true)
   self.__index = self
   return setmetatable(description, self)
 end
@@ -28,22 +23,6 @@ end
 ]]
 function Bullet:act (dt)
   self:shoot(dt)
-end
-
---[[
-
-  Bullet: Drawing
-
-]]
-function Bullet:draw ()
-  love.graphics.draw(self.sprite, self.x, self.y, self.direction, 1, 1, self.width / 2, self.height / 2)
-  -- Drawing trajectory
-  love.graphics.line(
-    0,
-    0,
-    100 * math.cos(self.direction),
-    100 * math.sin(self.direction)
-  )
 end
 
 --[[
@@ -69,7 +48,7 @@ end
 
 function Bullet:shoot (dt)
   self.angle = (self.direction * 360) / (2 * math.pi)
-  if self.moving and not touchingEdge(self) then
+  if self.moving and not self:touchingEdge(self) then
     self.x = self.x + self.speed * math.cos(self.direction)
     self.y = self.y + self.speed * math.sin(self.direction)
   else
