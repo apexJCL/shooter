@@ -56,7 +56,7 @@ function Bullet:shoot (dt)
       self.x = self.x + self.speed * dt * math.cos(self.direction)
       self.y = self.y + self.speed * dt * math.sin(self.direction)
     else
-      self.sound_shoot:rewind()
+      self.sound_shoot:stop()
       self.x = 0
       self.y = 0
       self.moving = false
