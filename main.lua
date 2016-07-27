@@ -13,24 +13,35 @@ function love.load(arg)
     x = love.graphics.getWidth() / 2,
     y = love.graphics.getHeight() / 2
   }
-
-  objects = {
-    player = Player:new(),
-    enemy = Enemy:new()
-  }
+  player = Player:new()
+  enemy = Enemy:new()
 end
 
 function love.update(dt)
-  for k,v in pairs(objects) do
-    v:script(dt)
-    v:act(dt)
-  end
+  player:script(dt)
+  player:act(dt)
+  enemy:act(dt, player.bullet)
 end
 
 function love.draw()
   -- Centers camera on screen
   love.graphics.translate(camera.x, camera.y)
-  for k,v in pairs(objects) do
-    v:draw()
-  end
+  player:draw()
+  enemy:draw()
+  debug()
+end
+
+function debug ()
+  love.graphics.print("Direction: "..player.direction, -camera.x, -camera.y + 10)
+  mx, my = s2m()
+  love.graphics.print("Mouse: X="..mx..", Y="..my, -camera.x, -camera.y + 25)
+  love.graphics.print("Camera: X: "..camera.x..", Y: "..camera.y, -camera.x, -camera.y + 50)
+  love.graphics.print("Enemies shooted: "..player.bullet.enemiesShooted, -camera.x, -camera.y + 75)
+end
+
+function s2m ()
+  x, y = love.mouse.getPosition()
+  x = x - camera.x
+  y = y - camera.y
+  return x, y
 end

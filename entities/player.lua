@@ -4,13 +4,15 @@
 
 Player = {}
 
+local screen_width = love.graphics.getWidth() / 2
+local screen_height = love.graphics.getHeight() / 2
+
 function Player:new()
   require(ENTITIES_PATH..'bullet')
   description = {
     x = 0,
     y = 0,
     direction = 0,
-    speed = 2,
     sprite = love.graphics.newImage('assets/shooter.png'),
     bullet = Bullet:new(),
     width = 0,
@@ -41,8 +43,8 @@ end
 function Player:act (dt)
   -- Bullet act
   self.bullet:act()
-  -- Cannon points automatically
-  self.direction = (self.direction >= (2*math.pi) and 0) or self.direction + (self.speed * dt)
+  -- Cannon points to mouse position
+  self.direction = math.atan2(love.mouse.getY() - screen_height, love.mouse.getX() - screen_width)
 end
 
 --[[

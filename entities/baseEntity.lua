@@ -97,9 +97,9 @@ end
 
 ]]
 
-function BaseEntity:touchingEdge (object)
-    return ((math.abs(object.x) + object.width) >= x_boundary) or
-           ((math.abs(object.y) + object.height) >= y_boundary)
+function BaseEntity:touchingEdge ()
+    return ((math.abs(self.x) + self.width) >= x_boundary) or
+           ((math.abs(self.y) + self.height) >= y_boundary)
 end
 
 function BaseEntity:touching (objectA, objectB)

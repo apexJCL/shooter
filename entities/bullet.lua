@@ -10,6 +10,8 @@ function Bullet:new()
   description.speed = 10
   description.moving = false
   description.angle = 0
+  description.touchingEnemy = false
+  description.enemiesShooted = 0
   description.sound_shoot = love.audio.newSource('assets/sounds/shoot.wav', "static")
   description:setSprite(love.graphics.newImage('assets/bullet.png'), true)
   self.__index = self
@@ -22,7 +24,10 @@ end
 
 ]]
 function Bullet:act (dt)
-  self:shoot(dt)
+  if self:shoot(dt) then
+    self.enemiesShooted  = self.enemiesShooted + 1
+    self.touchingEnemy = false
+  end
 end
 
 --[[
@@ -48,11 +53,15 @@ end
 
 function Bullet:shoot (dt)
   self.angle = (self.direction * 360) / (2 * math.pi)
-  if self.moving and not self:touchingEdge(self) then
-    self.x = self.x + self.speed * math.cos(self.direction)
-    self.y = self.y + self.speed * math.sin(self.direction)
+  if self.moving then
+    if self:touchingEdge() == false and self.touchingEnemy == false then
+      self.x = self.x + self.speed * math.cos(self.direction)
+      self.y = self.y + self.speed * math.sin(self.direction)
+    else
+      self.moving = false
+      return self.touchingEnemy
+    end
   else
-    self.moving = false
     self.x = 0
     self.y = 0
   end
