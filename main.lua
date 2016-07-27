@@ -37,6 +37,11 @@ function debug ()
   love.graphics.print("Mouse: X="..mx..", Y="..my, -camera.x, -camera.y + 25)
   love.graphics.print("Camera: X: "..camera.x..", Y: "..camera.y, -camera.x, -camera.y + 50)
   love.graphics.print("Enemies shooted: "..player.bullet.enemiesShooted, -camera.x, -camera.y + 75)
+  offset = 0
+  for k,v in pairs(love.touch.getTouches()) do
+    love.graphics.print("Touch ID: "..v.id, -camera.x, -camera.y + (100 * offset))
+    offset = offset + 20
+  end
 end
 
 function s2m ()
