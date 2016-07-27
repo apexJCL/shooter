@@ -42,7 +42,7 @@ end
 ]]
 function Player:act (dt)
   -- Bullet act
-  self.bullet:act()
+  self.bullet:act(dt)
   -- Cannon points to mouse position
   self.direction = math.atan2(love.mouse.getY() - screen_height, love.mouse.getX() - screen_width)
 end
