@@ -13,8 +13,8 @@ function Bullet:new()
     speed = 10,
     sprite = love.graphics.newImage('assets/bullet.png'),
     moving = false,
-    onEdge = false,
-    angle = 0
+    angle = 0,
+    sound_shoot = love.audio.newSource('assets/sounds/shoot.wav', "static")
   }
   description.width, description.height = description.sprite:getDimensions()
   self.__index = self
@@ -76,5 +76,13 @@ function Bullet:shoot (dt)
     self.moving = false
     self.x = 0
     self.y = 0
+  end
+end
+
+function Bullet:init_shoot (direction)
+  if not self.moving then
+    self:setDirection(direction)
+    self.moving = true
+    self.sound_shoot:play()
   end
 end

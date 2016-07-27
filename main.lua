@@ -18,6 +18,7 @@ function love.update(dt)
 end
 
 function love.draw()
+  -- Centers camera on screen
   love.graphics.translate(camera.x, camera.y)
   debug()
   -- Draws the player and centers
