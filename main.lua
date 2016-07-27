@@ -38,9 +38,12 @@ function debug ()
   love.graphics.print("Camera: X: "..camera.x..", Y: "..camera.y, -camera.x, -camera.y + 50)
   love.graphics.print("Enemies shooted: "..player.bullet.enemiesShooted, -camera.x, -camera.y + 75)
   offset = 0
+  counter = 1
   for k,v in pairs(love.touch.getTouches()) do
-    love.graphics.print("Touch ID: "..v.id, -camera.x, -camera.y + (100 * offset))
+    tx, ty = love.touch.getPosition(v)
+    love.graphics.print("Touch "..counter..": X="..tx..", Y="..ty, -camera.x, -camera.y + (100 * offset))
     offset = offset + 20
+    counter = counter + 1
   end
 end
 
